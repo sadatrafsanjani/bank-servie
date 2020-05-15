@@ -1,0 +1,49 @@
+spring:
+  thymeleaf:
+    cache: false
+  profiles:
+    active: dev
+  jpa:
+    database: POSTGRESQL
+    show-sql: false
+    hibernate:
+      ddl-auto: update
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://localhost:5432/bank
+    username: postgres
+    password: 123456
+    driverClassName: org.postgresql.Driver
+  mail:
+    default-encoding: UTF-8
+    host: smtp.gmail.com
+    port: 587
+    username: xerodispatch@gmail.com
+    password: dieanotherday666
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    protocol: smtp
+    tls: true
+
+jwt:
+  expiration:
+    time: 5000000
+
+management:
+  endpoint:
+    health:
+      show-details: always
+    beans:
+      enabled: true
+  endpoints:
+    web:
+      cors:
+        allowed-methods: OPTIONS, GET, POST
+        allowed-headers: "*"
+        allowed-origins: "*"
+      exposure:
+        include: "*"
