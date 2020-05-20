@@ -8,8 +8,9 @@ import java.util.Set;
 @Getter
 @Setter
 @Builder
-public class RoleRequest {
+public class RoleResponse {
 
-    private Long menuId;
-    private Set<Long> menus;
+    private Long id;
+    private String role;
+    private Set<String> pages;
 }

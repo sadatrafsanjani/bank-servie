@@ -1,6 +1,5 @@
 package com.sadat.repository;
 
-import com.sadat.model.Role;
 import com.sadat.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -8,7 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
-import java.util.Set;
 
 @Repository
 @Transactional
@@ -36,8 +34,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Query("UPDATE User u SET u.status = FALSE WHERE u.id = :id")
     void deactivateUser(Long id);
-
-    @Modifying
-    @Query("UPDATE User u SET u.roles = :roles WHERE u.id = :id")
-    void updateRoleMenus(Long id, Set<Role> roles);
 }

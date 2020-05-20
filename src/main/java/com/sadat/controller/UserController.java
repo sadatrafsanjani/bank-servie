@@ -48,18 +48,6 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/allowed/menus/{id}")
-    public ResponseEntity<List<AllowedMenuResponse>> getUserAllowedMenusById(@PathVariable("id") long id){
-
-        List<AllowedMenuResponse> response = userService.getUserAllowedMenus(id);
-
-        if(!response.isEmpty()){
-            return ResponseEntity.ok(response);
-        }
-
-        return ResponseEntity.ok().build();
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> getUserById(@PathVariable("id") long id){
 
@@ -85,14 +73,6 @@ public class UserController {
     public ResponseEntity changePassword(@PathVariable("id") long id, @Valid @RequestBody PasswordRequest request){
 
         userService.updatePassword(id, request);
-
-        return ResponseEntity.noContent().build();
-    }
-
-    @PutMapping("/assign/menu/{id}")
-    public ResponseEntity assignMenu(@PathVariable("id") long id, @Valid @RequestBody AssignMenuRequest request){
-
-        userService.assignMenu(id, request);
 
         return ResponseEntity.noContent().build();
     }
