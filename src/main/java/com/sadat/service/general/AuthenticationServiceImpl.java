@@ -2,6 +2,7 @@ package com.sadat.service.general;
 
 import com.sadat.dto.*;
 import com.sadat.model.*;
+import com.sadat.repository.MenuRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -22,6 +24,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     private Logger logger = LoggerFactory.getLogger(AuthenticationServiceImpl.class);
     private UserService userService;
+    private MenuRepository menuRepository;
     private RoleService roleService;
     private EmailService emailService;
     private RefreshTokenService refreshTokenService;
@@ -31,6 +34,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Autowired
     public AuthenticationServiceImpl(UserService userService,
+                                     MenuRepository menuRepository,
                                      RoleService roleService,
                                      EmailService emailService,
                                      RefreshTokenService refreshTokenService,
@@ -38,6 +42,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                                      AuthenticationManager authenticationManager,
                                      JwtService jwtService) {
         this.userService = userService;
+        this.menuRepository = menuRepository;
         this.roleService = roleService;
         this.emailService = emailService;
         this.refreshTokenService = refreshTokenService;
@@ -58,8 +63,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         user.setUsername(request.getUsername());
         user.setEmail(request.getEmail());
         user.setPassword(encodePassword(request.getPassword()));
+
+        Set<Menu> menus = new HashSet<>(menuRepository.findUserMenus());
+
         Set<Role> roles = new HashSet<>();
-        roles.add(roleService.findRole("ROLE_USER"));
+        Role role = roleService.findRole("ROLE_USER");
+        role.setMenus(menus);
+        roles.add(role);
+
         user.setRoles(roles);
         user.setStatus(true);
 

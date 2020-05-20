@@ -4,6 +4,7 @@ import com.sadat.dto.*;
 import com.sadat.model.Menu;
 import com.sadat.model.Role;
 import com.sadat.model.User;
+import com.sadat.repository.MenuRepository;
 import com.sadat.repository.RoleRepository;
 import com.sadat.repository.UserRepository;
 import org.slf4j.Logger;
@@ -20,14 +21,17 @@ public class UserServiceImpl implements UserService {
 
     private Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
     private UserRepository userRepository;
+    private MenuRepository menuRepository;
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository,
+                           MenuRepository menuRepository,
                            RoleRepository roleRepository,
                            PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.menuRepository = menuRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
     }
@@ -220,19 +224,61 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<AllowedMenuResponse> getUserAllowedMenus(long id){
+
+        List<AllowedMenuResponse> responses = new ArrayList<>();
+
+        User user = userRepository.getOne(id);
+
+        for(Role role : user.getRoles()){
+
+            AllowedMenuResponse response = AllowedMenuResponse.builder()
+                    .role(role.getRole().equals("ROLE_ADMIN") ? "Admin" : "User")
+                    .menus(getPages(role.getMenus()))
+                    .build();
+
+            responses.add(response);
+        }
+
+        return responses;
+    }
+
+    @Override
     public void assignMenu(long id, AssignMenuRequest request){
 
         User user = userRepository.getOne(id);
-        Set<Menu> oldMenus = new HashSet<>();
-
-        for(Role role: user.getRoles()){
-            role.getMenus();
-        }
-
+        Set<Menu> updatedMenus = getMenus(request.getMenus());
         Set<Role> roles = new HashSet<>();
 
-        for(long menuId: request.getMenus()){
+        for(Role role : user.getRoles()){
 
+            role.setMenus(updatedMenus);
+            roles.add(role);
         }
+
+        userRepository.updateRoleMenus(id, roles);
+    }
+
+    private Set<Menu> getMenus(Set<Long> menuSet){
+
+        Set<Menu> menus = new HashSet<>();
+
+        for(Long id : menuSet){
+            menus.add(menuRepository.getOne(id));
+        }
+
+        return menus;
+    }
+
+    private Set<String> getPages(Set<Menu> menus){
+
+        Set<String> pages = new HashSet<>();
+
+        for(Menu menu : menus){
+
+            pages.add(menu.getUserInterface());
+        }
+
+        return pages;
     }
 }

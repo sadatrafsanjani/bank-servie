@@ -22,4 +22,5 @@ public interface UserService extends UserDetailsService {
     boolean activateUser(long id);
     boolean deactivateUser(long id);
     void assignMenu(long id, AssignMenuRequest request);
+    List<AllowedMenuResponse> getUserAllowedMenus(long id);
 }

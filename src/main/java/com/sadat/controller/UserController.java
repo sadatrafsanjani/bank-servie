@@ -1,9 +1,6 @@
 package com.sadat.controller;
 
-import com.sadat.dto.AssignMenuRequest;
-import com.sadat.dto.EmailRequest;
-import com.sadat.dto.PasswordRequest;
-import com.sadat.dto.UserResponse;
+import com.sadat.dto.*;
 import com.sadat.service.general.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -43,6 +40,18 @@ public class UserController {
     public ResponseEntity<List<UserResponse>> getEmployees(){
 
         List<UserResponse> response = userService.getEmployees();
+
+        if(!response.isEmpty()){
+            return ResponseEntity.ok(response);
+        }
+
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/allowed/menus/{id}")
+    public ResponseEntity<List<AllowedMenuResponse>> getUserAllowedMenusById(@PathVariable("id") long id){
+
+        List<AllowedMenuResponse> response = userService.getUserAllowedMenus(id);
 
         if(!response.isEmpty()){
             return ResponseEntity.ok(response);
