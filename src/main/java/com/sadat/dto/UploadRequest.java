@@ -11,7 +11,6 @@ import lombok.Setter;
 @Setter
 public class UploadRequest {
 
-    private Long customerId;
     private byte[] nid;
     private byte[] picture;
 }

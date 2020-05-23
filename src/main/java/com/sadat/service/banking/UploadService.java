@@ -9,5 +9,5 @@ public interface UploadService {
     List<Upload> getUploads();
     Upload getUpload(long id);
     Upload getByCustomerId(long id);
-    Upload saveUpload(UploadRequest request);
+    void updateUpload(long id, UploadRequest request);
 }

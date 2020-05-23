@@ -1,13 +1,11 @@
 package com.sadat.controller;
 
 import com.sadat.dto.UploadRequest;
+import com.sadat.service.banking.CustomerService;
 import com.sadat.service.banking.UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
@@ -15,20 +13,25 @@ import javax.validation.Valid;
 public class UploadController {
 
     private UploadService uploadService;
+    private CustomerService customerService;
 
     @Autowired
-    public UploadController(UploadService uploadService) {
+    public UploadController(UploadService uploadService,
+                            CustomerService customerService) {
         this.uploadService = uploadService;
+        this.customerService = customerService;
     }
 
-    @PostMapping
-    public ResponseEntity save(@Valid @RequestBody UploadRequest request){
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(@PathVariable("id")long id, @Valid @RequestBody UploadRequest request){
 
-        if(uploadService.saveUpload(request) != null){
+        if((customerService.getCustomer(id) != null) && (uploadService.getByCustomerId(id) != null)){
 
-            return ResponseEntity.ok("File Uploaded Successfully!");
+            uploadService.updateUpload(id, request);
+
+            return ResponseEntity.noContent().build();
         }
 
-        return ResponseEntity.badRequest().build();
+        return ResponseEntity.notFound().build();
     }
 }

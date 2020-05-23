@@ -2,7 +2,6 @@ package com.sadat.service.banking;
 
 import com.sadat.dto.UploadRequest;
 import com.sadat.model.Upload;
-import com.sadat.repository.CustomerRepository;
 import com.sadat.repository.UploadRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,13 +11,10 @@ import java.util.List;
 public class UploadServiceImpl implements UploadService {
 
     private UploadRepository uploadRepository;
-    private CustomerRepository customerRepository;
 
     @Autowired
-    public UploadServiceImpl(UploadRepository uploadRepository,
-                             CustomerRepository customerRepository) {
+    public UploadServiceImpl(UploadRepository uploadRepository) {
         this.uploadRepository = uploadRepository;
-        this.customerRepository = customerRepository;
     }
 
     @Override
@@ -40,13 +36,12 @@ public class UploadServiceImpl implements UploadService {
     }
 
     @Override
-    public Upload saveUpload(UploadRequest request) {
+    public void updateUpload(long id, UploadRequest request) {
 
         Upload upload = new Upload();
-        upload.setCustomer(customerRepository.getOne(request.getCustomerId()));
         upload.setNid(request.getNid());
         upload.setPicture(request.getPicture());
 
-        return uploadRepository.save(upload);
+        uploadRepository.update(id, request.getNid(), request.getPicture());
     }
 }
