@@ -1,7 +1,6 @@
 package com.sadat.service.general;
 
 import com.sadat.dto.*;
-import com.sadat.model.Menu;
 import com.sadat.model.Role;
 import com.sadat.model.User;
 import com.sadat.repository.RoleRepository;
@@ -46,14 +45,12 @@ public class UserServiceImpl implements UserService {
 
             User user = userOptional.get();
 
-            UserResponse response = UserResponse.builder()
+            return UserResponse.builder()
                     .id(user.getId())
                     .username(user.getUsername())
                     .email(user.getEmail())
                     .roles(getRoles(user))
                     .build();
-
-            return response;
         }
 
         return null;
@@ -202,7 +199,7 @@ public class UserServiceImpl implements UserService {
 
         User user = userRepository.getOne(id);
 
-        return user.isStatus() ? true : false;
+        return user.isStatus();
     }
 
     @Override
@@ -216,6 +213,6 @@ public class UserServiceImpl implements UserService {
 
         User user = userRepository.getOne(id);
 
-        return !user.isStatus() ? true : false;
+        return !user.isStatus();
     }
 }

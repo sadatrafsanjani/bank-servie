@@ -13,6 +13,6 @@ public interface MenuRepository extends JpaRepository<Menu, Long> {
 
     Menu findByUserInterface(String userInterface);
 
-    @Query("SELECT m FROM Menu m WHERE m.id > 4")
+    @Query("SELECT m FROM Menu m WHERE m.id > 5")
     List<Menu> findUserMenus();
 }

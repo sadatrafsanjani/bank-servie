@@ -15,7 +15,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Service
@@ -93,7 +92,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             String authenticationToken = jwtService.generateToken(authentication);
             User user = userService.findByUsername(request.getUsername());
 
-            LoginResponse response = LoginResponse.builder()
+            return LoginResponse.builder()
                     .id(user.getId())
                     .username(request.getUsername())
                     .roles(userService.getRoles(user))
@@ -102,7 +101,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                     .expiresAt(Instant.now().plusMillis(jwtService.getExpirationTime()))
                     .build();
 
-            return response;
         }
         catch (Exception e){
             logger.info(e.getMessage());
@@ -118,7 +116,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         String token = jwtService.generateTokenWithUsername(request.getUsername());
         User user = userService.findByUsername(request.getUsername());
 
-        LoginResponse response = LoginResponse.builder()
+        return LoginResponse.builder()
                 .id(user.getId())
                 .username(request.getUsername())
                 .roles(userService.getRoles(user))
@@ -126,8 +124,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .refreshToken(request.getRefreshToken())
                 .expiresAt(Instant.now().plusMillis(jwtService.getExpirationTime()))
                 .build();
-
-        return response;
     }
 
     @Override
@@ -147,7 +143,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         User user = userService.findByEmail(request.getEmail());
 
-        return (user != null) ? true : false;
+        return (user != null);
     }
 
     @Override
@@ -155,6 +151,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         User user = userService.findByUsername(request.getUsername());
 
-        return (user != null) ? true : false;
+        return (user != null);
     }
 }
