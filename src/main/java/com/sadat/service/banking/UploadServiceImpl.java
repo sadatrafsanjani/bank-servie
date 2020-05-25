@@ -57,7 +57,7 @@ public class UploadServiceImpl implements UploadService {
         upload.setNid(compressBytes(request.getNid()));
         upload.setPicture(compressBytes(request.getPicture()));
 
-        uploadRepository.update(id, request.getNid(), request.getPicture());
+        uploadRepository.update(id, upload.getNid(), upload.getPicture());
     }
 
     private byte[] compressBytes(byte[] data) {
