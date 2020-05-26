@@ -10,4 +10,6 @@ public interface UploadService {
     List<Upload> getUploads();
     UploadResponse getUploadByCustomerId(long id);
     void updateUpload(long id, UploadRequest request);
+    void updateNid(long id, UploadRequest request);
+    void updatePicture(long id, UploadRequest request);
 }

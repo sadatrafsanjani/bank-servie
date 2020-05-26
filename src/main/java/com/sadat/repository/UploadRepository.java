@@ -16,4 +16,12 @@ public interface UploadRepository extends JpaRepository<Upload, Long> {
     @Modifying
     @Query("UPDATE Upload u SET u.nid = :nid, u.picture = :picture WHERE u.customer.id = :id")
     void update(Long id, byte[] nid, byte[] picture);
+
+    @Modifying
+    @Query("UPDATE Upload u SET u.nid = :nid WHERE u.customer.id = :id")
+    void updateNid(Long id, byte[] nid);
+
+    @Modifying
+    @Query("UPDATE Upload u SET u.picture = :picture WHERE u.customer.id = :id")
+    void updatePicture(Long id, byte[] picture);
 }

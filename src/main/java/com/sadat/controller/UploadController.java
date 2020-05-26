@@ -63,4 +63,50 @@ public class UploadController {
 
         return ResponseEntity.notFound().build();
     }
+
+    @PutMapping("/nid/{id}")
+    public ResponseEntity<?> updateNid(@PathVariable("id") long id,
+                                    @RequestParam("nid") MultipartFile nidFile){
+
+        if(uploadService.getUploadByCustomerId(id) != null){
+
+            try{
+                UploadRequest request = UploadRequest.builder()
+                        .nid(nidFile.getBytes())
+                        .build();
+
+                uploadService.updateNid(id, request);
+
+                return ResponseEntity.noContent().build();
+            }
+            catch(IOException e){
+                logger.error(e.getMessage());
+            }
+        }
+
+        return ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("/picture/{id}")
+    public ResponseEntity<?> update(@PathVariable("id") long id,
+                                    @RequestParam("picture") MultipartFile pictureFile){
+
+        if(uploadService.getUploadByCustomerId(id) != null){
+
+            try{
+                UploadRequest request = UploadRequest.builder()
+                        .picture(pictureFile.getBytes())
+                        .build();
+
+                uploadService.updatePicture(id, request);
+
+                return ResponseEntity.noContent().build();
+            }
+            catch(IOException e){
+                logger.error(e.getMessage());
+            }
+        }
+
+        return ResponseEntity.notFound().build();
+    }
 }

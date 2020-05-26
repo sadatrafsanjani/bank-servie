@@ -60,6 +60,24 @@ public class UploadServiceImpl implements UploadService {
         uploadRepository.update(id, upload.getNid(), upload.getPicture());
     }
 
+    @Override
+    public void updateNid(long id, UploadRequest request) {
+
+        Upload upload = new Upload();
+        upload.setNid(compressBytes(request.getNid()));
+
+        uploadRepository.updateNid(id, upload.getNid());
+    }
+
+    @Override
+    public void updatePicture(long id, UploadRequest request) {
+
+        Upload upload = new Upload();
+        upload.setPicture(compressBytes(request.getPicture()));
+
+        uploadRepository.updatePicture(id, upload.getPicture());
+    }
+
     private byte[] compressBytes(byte[] data) {
 
         Deflater deflater = new Deflater();

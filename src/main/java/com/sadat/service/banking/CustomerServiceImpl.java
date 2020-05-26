@@ -150,6 +150,14 @@ public class CustomerServiceImpl implements CustomerService {
                 .address(customer.getAddress())
                 .phoneNo(customer.getPhoneNo())
                 .balance(balance)
+                .uploadStatus(checkUploadStatus(customer.getId()))
                 .build();
+    }
+
+    private boolean checkUploadStatus(long id){
+
+        Upload upload = uploadRepository.findByCustomer_Id(id);
+
+        return ((upload.getNid() != null) && (upload.getPicture() != null));
     }
 }

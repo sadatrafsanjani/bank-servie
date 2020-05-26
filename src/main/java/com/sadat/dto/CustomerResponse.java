@@ -21,4 +21,5 @@ public class CustomerResponse {
     private String phoneNo;
     private String address;
     private double balance;
+    private boolean uploadStatus;
 }
