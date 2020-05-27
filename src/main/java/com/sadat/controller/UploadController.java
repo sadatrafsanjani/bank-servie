@@ -44,7 +44,7 @@ public class UploadController {
                                     @RequestParam("nid") MultipartFile nidFile,
                                     @RequestParam("picture") MultipartFile pictureFile){
 
-        if(uploadService.getUploadByCustomerId(id) != null){
+        if(uploadService.checkCustomer(id)){
 
             try{
                 UploadRequest request = UploadRequest.builder()
@@ -68,7 +68,7 @@ public class UploadController {
     public ResponseEntity<?> updateNid(@PathVariable("id") long id,
                                     @RequestParam("nid") MultipartFile nidFile){
 
-        if(uploadService.getUploadByCustomerId(id) != null){
+        if(uploadService.checkCustomer(id)){
 
             try{
                 UploadRequest request = UploadRequest.builder()
@@ -88,10 +88,10 @@ public class UploadController {
     }
 
     @PutMapping("/picture/{id}")
-    public ResponseEntity<?> update(@PathVariable("id") long id,
+    public ResponseEntity<?> updatePicture(@PathVariable("id") long id,
                                     @RequestParam("picture") MultipartFile pictureFile){
 
-        if(uploadService.getUploadByCustomerId(id) != null){
+        if(uploadService.checkCustomer(id)){
 
             try{
                 UploadRequest request = UploadRequest.builder()

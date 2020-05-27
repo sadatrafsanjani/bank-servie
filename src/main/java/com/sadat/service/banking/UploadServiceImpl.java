@@ -29,6 +29,12 @@ public class UploadServiceImpl implements UploadService {
     }
 
     @Override
+    public boolean checkCustomer(long id){
+
+        return uploadRepository.findByCustomer_Id(id) != null;
+    }
+
+    @Override
     public List<Upload> getUploads(){
 
         return uploadRepository.findAll();
@@ -42,8 +48,8 @@ public class UploadServiceImpl implements UploadService {
         if(upload != null){
 
             return UploadResponse.builder()
-                    .nid(decompressBytes(upload.getNid()))
-                    .picture(decompressBytes(upload.getPicture()))
+                    .nid(upload.getNid() != null? decompressBytes(upload.getNid()) : null)
+                    .picture(upload.getPicture() != null ? decompressBytes(upload.getPicture()) : null)
                     .build();
         }
 
