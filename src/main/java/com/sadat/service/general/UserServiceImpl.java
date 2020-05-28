@@ -5,6 +5,7 @@ import com.sadat.model.Role;
 import com.sadat.model.User;
 import com.sadat.repository.RoleRepository;
 import com.sadat.repository.UserRepository;
+import com.sadat.utility.Image;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -214,5 +215,31 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.getOne(id);
 
         return !user.isStatus();
+    }
+
+    @Override
+    public void updatePicture(long id, PictureRequest request){
+
+        userRepository.updatePicture(id, Image.compressBytes(request.getPicture()));
+    }
+
+    @Override
+    public PictureResponse getProfilePicture(long id){
+
+        Optional<User> userOptional = userRepository.findById(id);
+
+        if(userOptional.isPresent()){
+
+            User user = userOptional.get();
+
+            byte[] picture = user.getPicture();
+
+            return PictureResponse.builder()
+                    .picture(picture != null ? Image.decompressBytes(picture) : null)
+                    .build();
+
+        }
+
+        return null;
     }
 }

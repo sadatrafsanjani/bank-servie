@@ -34,4 +34,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Query("UPDATE User u SET u.status = FALSE WHERE u.id = :id")
     void deactivateUser(Long id);
+
+    @Modifying
+    @Query("UPDATE User u SET u.picture = :picture WHERE u.id = :id")
+    void updatePicture(Long id, byte[] picture);
 }

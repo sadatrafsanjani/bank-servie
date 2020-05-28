@@ -38,4 +38,7 @@ public class User {
 
     @Column(name = "STATUS")
     private boolean status;
+
+    @Column(name = "PICTURE")
+    private byte[] picture;
 }

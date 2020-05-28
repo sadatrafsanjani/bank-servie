@@ -1,4 +1,4 @@
-INSERT INTO bank.public.USERS (USERNAME, PASSWORD, EMAIL, STATUS) VALUES ('admin','$2a$10$stY59P7EmX7HNbUKiIVBXueYq6Gcc7/rVbUM3wChykyLcBudoUkdm', 'admin@admin.com', true);
+INSERT INTO bank.public.USERS (USERNAME, PASSWORD, EMAIL, STATUS, PICTURE) VALUES ('admin','$2a$10$stY59P7EmX7HNbUKiIVBXueYq6Gcc7/rVbUM3wChykyLcBudoUkdm', 'admin@admin.com', true, null);
 
 INSERT INTO bank.public.MENUS (USER_INTERFACE) VALUES ('All');
 INSERT INTO bank.public.MENUS (USER_INTERFACE) VALUES ('Dashboard');
@@ -6,6 +6,7 @@ INSERT INTO bank.public.MENUS (USER_INTERFACE) VALUES ('Create User');
 INSERT INTO bank.public.MENUS (USER_INTERFACE) VALUES ('User Detail');
 INSERT INTO bank.public.MENUS (USER_INTERFACE) VALUES ('Roles');
 INSERT INTO bank.public.MENUS (USER_INTERFACE) VALUES ('Home');
+INSERT INTO bank.public.MENUS (USER_INTERFACE) VALUES ('Profile');
 INSERT INTO bank.public.MENUS (USER_INTERFACE) VALUES ('Create Customer');
 INSERT INTO bank.public.MENUS (USER_INTERFACE) VALUES ('Search Customer');
 INSERT INTO bank.public.MENUS (USER_INTERFACE) VALUES ('Customer Upload');

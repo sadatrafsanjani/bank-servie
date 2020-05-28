@@ -21,4 +21,6 @@ public interface UserService extends UserDetailsService {
     UserResponse getUserById(long id);
     boolean activateUser(long id);
     boolean deactivateUser(long id);
+    void updatePicture(long id, PictureRequest request);
+    PictureResponse getProfilePicture(long id);
 }

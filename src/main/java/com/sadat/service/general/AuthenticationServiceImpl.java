@@ -3,6 +3,7 @@ package com.sadat.service.general;
 import com.sadat.dto.*;
 import com.sadat.model.*;
 import com.sadat.repository.MenuRepository;
+import com.sadat.utility.Image;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,16 +65,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         user.setPassword(encodePassword(request.getPassword()));
 
         Set<Menu> menus = new HashSet<>(menuRepository.findUserMenus());
-
         Set<Role> roles = new HashSet<>();
         Role role = roleService.findRole("ROLE_USER");
         role.setMenus(menus);
         roles.add(role);
-
         user.setRoles(roles);
         user.setStatus(true);
+        user.setPicture(null);
 
-        emailService.sendPassword(request.getEmail(),request.getUsername(),request.getPassword());
+        //emailService.sendPassword(request.getEmail(), request.getUsername(), request.getPassword());
 
         return userService.saveUser(user);
     }
@@ -92,6 +92,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             String authenticationToken = jwtService.generateToken(authentication);
             User user = userService.findByUsername(request.getUsername());
 
+            byte[] picture = user.getPicture();
+
             return LoginResponse.builder()
                     .id(user.getId())
                     .username(request.getUsername())
@@ -99,6 +101,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                     .loginToken(authenticationToken)
                     .refreshToken(refreshTokenService.generateRefreshToken().getToken())
                     .expiresAt(Instant.now().plusMillis(jwtService.getExpirationTime()))
+                    .picture(picture != null ? Image.decompressBytes(picture) : null)
                     .build();
 
         }
@@ -116,6 +119,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         String token = jwtService.generateTokenWithUsername(request.getUsername());
         User user = userService.findByUsername(request.getUsername());
 
+        byte[] picture = user.getPicture();
+
         return LoginResponse.builder()
                 .id(user.getId())
                 .username(request.getUsername())
@@ -123,6 +128,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .loginToken(token)
                 .refreshToken(request.getRefreshToken())
                 .expiresAt(Instant.now().plusMillis(jwtService.getExpirationTime()))
+                .picture(picture != null ? Image.decompressBytes(picture) : null)
                 .build();
     }
 
@@ -141,16 +147,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public boolean checkEmailIfExists(EmailRequest request){
 
-        User user = userService.findByEmail(request.getEmail());
-
-        return (user != null);
+        return userService.findByEmail(request.getEmail()) != null;
     }
 
     @Override
     public boolean checkUsernameIfExists(UsernameRequest request){
 
-        User user = userService.findByUsername(request.getUsername());
-
-        return (user != null);
+        return userService.findByUsername(request.getUsername()) != null;
     }
 }

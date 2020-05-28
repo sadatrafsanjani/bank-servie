@@ -20,4 +20,5 @@ public class LoginResponse {
     private String loginToken;
     private String refreshToken;
     private Instant expiresAt;
+    private byte[] picture;
 }

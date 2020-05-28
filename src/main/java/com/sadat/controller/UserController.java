@@ -8,7 +8,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -61,8 +63,21 @@ public class UserController {
         return ResponseEntity.notFound().build();
     }
 
+    @GetMapping("/picture/{id}")
+    public ResponseEntity<PictureResponse> getProfilePicture(@PathVariable("id") long id){
+
+        PictureResponse response = userService.getProfilePicture(id);
+
+        if(response != null){
+
+            return ResponseEntity.ok(response);
+        }
+
+        return ResponseEntity.notFound().build();
+    }
+
     @PutMapping("/change/email/{id}")
-    public ResponseEntity changeEmail(@PathVariable("id") long id, @Valid @RequestBody EmailRequest request){
+    public ResponseEntity<?> changeEmail(@PathVariable("id") long id, @Valid @RequestBody EmailRequest request){
 
         userService.updateEmail(id, request);
 
@@ -70,7 +85,7 @@ public class UserController {
     }
 
     @PutMapping("/change/password/{id}")
-    public ResponseEntity changePassword(@PathVariable("id") long id, @Valid @RequestBody PasswordRequest request){
+    public ResponseEntity<?> changePassword(@PathVariable("id") long id, @Valid @RequestBody PasswordRequest request){
 
         userService.updatePassword(id, request);
 
@@ -86,7 +101,7 @@ public class UserController {
     }
 
     @GetMapping("/activate/{id}")
-    public ResponseEntity activateUser(@PathVariable("id") long id){
+    public ResponseEntity<?> activateUser(@PathVariable("id") long id){
 
         if(userService.activateUser(id)){
             return ResponseEntity.ok("User Activated!");
@@ -96,10 +111,32 @@ public class UserController {
     }
 
     @GetMapping("/deactivate/{id}")
-    public ResponseEntity deactivateUser(@PathVariable("id") long id){
+    public ResponseEntity<?> deactivateUser(@PathVariable("id") long id){
 
         if(userService.deactivateUser(id)){
             return ResponseEntity.ok("User Deactivated!");
+        }
+
+        return ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("/picture/{id}")
+    public ResponseEntity<?> update(@PathVariable("id") long id,
+                                    @RequestParam("picture") MultipartFile pictureFile){
+
+        if(userService.getUserById(id) != null){
+
+            try{
+                PictureRequest request = PictureRequest.builder()
+                        .picture(pictureFile.getBytes())
+                        .build();
+                userService.updatePicture(id, request);
+
+                return ResponseEntity.noContent().build();
+            }
+            catch (IOException e){
+                logger.error(e.getMessage());
+            }
         }
 
         return ResponseEntity.notFound().build();
