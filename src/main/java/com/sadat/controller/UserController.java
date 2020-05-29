@@ -104,7 +104,7 @@ public class UserController {
     public ResponseEntity<?> activateUser(@PathVariable("id") long id){
 
         if(userService.activateUser(id)){
-            return ResponseEntity.ok("User Activated!");
+            return ResponseEntity.noContent().build();
         }
 
         return ResponseEntity.notFound().build();
@@ -114,7 +114,7 @@ public class UserController {
     public ResponseEntity<?> deactivateUser(@PathVariable("id") long id){
 
         if(userService.deactivateUser(id)){
-            return ResponseEntity.ok("User Deactivated!");
+            return ResponseEntity.noContent().build();
         }
 
         return ResponseEntity.notFound().build();

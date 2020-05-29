@@ -16,4 +16,5 @@ public class UserResponse {
     private String email;
     private boolean status;
     private Set<Long> roles;
+    private byte[] picture;
 }

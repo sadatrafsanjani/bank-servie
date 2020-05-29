@@ -46,12 +46,7 @@ public class UserServiceImpl implements UserService {
 
             User user = userOptional.get();
 
-            return UserResponse.builder()
-                    .id(user.getId())
-                    .username(user.getUsername())
-                    .email(user.getEmail())
-                    .roles(getRoles(user))
-                    .build();
+            return modelToResponse(user);
         }
 
         return null;
@@ -103,15 +98,7 @@ public class UserServiceImpl implements UserService {
 
         for(User user : userRepository.findAll()){
 
-            UserResponse userResponse = UserResponse.builder()
-                    .id(user.getId())
-                    .username(user.getUsername())
-                    .email(user.getEmail())
-                    .status(user.isStatus())
-                    .roles(getRoles(user))
-                    .build();
-
-            response.add(userResponse);
+            response.add(modelToResponse(user));
         }
 
         return response;
@@ -127,15 +114,7 @@ public class UserServiceImpl implements UserService {
 
             if(!user.getRoles().contains(role)){
 
-                UserResponse userResponse = UserResponse.builder()
-                        .id(user.getId())
-                        .username(user.getUsername())
-                        .email(user.getEmail())
-                        .status(user.isStatus())
-                        .roles(getRoles(user))
-                        .build();
-
-                response.add(userResponse);
+                response.add(modelToResponse(user));
             }
         }
 
@@ -241,5 +220,19 @@ public class UserServiceImpl implements UserService {
         }
 
         return null;
+    }
+
+    private UserResponse modelToResponse(User user){
+
+        byte[] picture = user.getPicture();
+
+        return UserResponse.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .status(user.isStatus())
+                .roles(getRoles(user))
+                .picture(picture != null ? Image.decompressBytes(picture) : null)
+                .build();
     }
 }
