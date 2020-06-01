@@ -11,7 +11,6 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 public class Menu {
 
     @Id
@@ -23,5 +22,5 @@ public class Menu {
     private String userInterface;
 
     @ManyToMany(mappedBy = "menus")
-    private Set<Role> roles = new HashSet<>();
+    private Set<User> users = new HashSet<>();
 }

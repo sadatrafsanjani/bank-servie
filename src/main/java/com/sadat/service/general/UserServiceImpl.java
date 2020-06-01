@@ -1,8 +1,10 @@
 package com.sadat.service.general;
 
 import com.sadat.dto.*;
+import com.sadat.model.Menu;
 import com.sadat.model.Role;
 import com.sadat.model.User;
+import com.sadat.repository.MenuRepository;
 import com.sadat.repository.RoleRepository;
 import com.sadat.repository.UserRepository;
 import com.sadat.utility.Image;
@@ -21,14 +23,17 @@ public class UserServiceImpl implements UserService {
     private Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
     private UserRepository userRepository;
     private RoleRepository roleRepository;
+    private MenuRepository menuRepository;
     private PasswordEncoder passwordEncoder;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository,
                            RoleRepository roleRepository,
+                           MenuRepository menuRepository,
                            PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.menuRepository = menuRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -233,6 +238,35 @@ public class UserServiceImpl implements UserService {
                 .status(user.isStatus())
                 .roles(getRoles(user))
                 .picture(picture != null ? Image.decompressBytes(picture) : null)
+                .pages(getPages(user.getMenus()))
                 .build();
+    }
+
+    @Override
+    public void updateMenu(long id, UserMenuRequest request) {
+
+        userRepository.updateMenu(id, getMenus(request.getMenus()));
+    }
+
+    private Set<Menu> getMenus(Set<Long> menuSet){
+
+        Set<Menu> menus = new HashSet<>();
+
+        for(Long id : menuSet){
+            menus.add(menuRepository.getOne(id));
+        }
+
+        return menus;
+    }
+
+    private Set<Long> getPages(Set<Menu> menus){
+
+        Set<Long> menuSet = new HashSet<>();
+
+        for(Menu menu : menus){
+            menuSet.add(menu.getId());
+        }
+
+        return menuSet;
     }
 }

@@ -8,6 +8,6 @@ import java.util.List;
 public interface MenuService {
 
     Menu findMenu(String userInterface);
-    List<MenuResponse> getMenus();
+    List<MenuResponse> getUserMenus();
     MenuResponse saveMenu(MenuRequest request);
 }

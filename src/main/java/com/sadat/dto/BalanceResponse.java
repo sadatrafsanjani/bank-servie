@@ -12,8 +12,8 @@ public class BalanceResponse {
 
     private String accountHolder;
     private String accountNo;
-    private double debit;
     private double credit;
+    private double debit;
     private double balance;
     private Instant transactionDatetime;
     private String description;

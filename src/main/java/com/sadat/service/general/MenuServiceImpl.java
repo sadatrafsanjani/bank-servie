@@ -20,7 +20,8 @@ public class MenuServiceImpl implements MenuService {
         this.menuRepository = menuRepository;
     }
 
-    public List<MenuResponse> getMenus(){
+    @Override
+    public List<MenuResponse> getUserMenus(){
 
         List<MenuResponse> responses = new ArrayList<>();
 

@@ -8,8 +8,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Builder
-public class RoleResponse {
+public class UserMenuRequest {
 
-    private Long id;
-    private String role;
+    private Set<Long> menus;
 }

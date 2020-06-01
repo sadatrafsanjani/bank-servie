@@ -20,23 +20,23 @@ public class BalanceController {
         this.balanceService = balanceService;
     }
 
-    @PostMapping("/debit")
-    public ResponseEntity debitAccount(@Valid @RequestBody TransactionRequest request){
-
-        if(balanceService.debitAccount(request) != null){
-
-            return ResponseEntity.ok("Account Debited by " + request.getAmount() + " BDT");
-        }
-
-        return ResponseEntity.notFound().build();
-    }
-
     @PostMapping("/credit")
     public ResponseEntity creditAccount(@Valid @RequestBody TransactionRequest request){
 
         if(balanceService.creditAccount(request) != null){
 
-            return ResponseEntity.ok("Account Credited by " + request.getAmount() + " BDT");
+            return ResponseEntity.ok("Account credited by " + request.getAmount() + " BDT");
+        }
+
+        return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping("/debit")
+    public ResponseEntity debitAccount(@Valid @RequestBody TransactionRequest request){
+
+        if(balanceService.debitAccount(request) != null){
+
+            return ResponseEntity.ok("Account debited by " + request.getAmount() + " BDT");
         }
 
         return ResponseEntity.notFound().build();

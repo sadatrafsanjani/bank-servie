@@ -20,10 +20,10 @@ public class MenuController {
         this.menuService = menuService;
     }
 
-    @GetMapping
-    public ResponseEntity<List<MenuResponse>> getMenus(){
+    @GetMapping("/user")
+    public ResponseEntity<List<MenuResponse>> getUserMenus(){
 
-        List<MenuResponse> responses = menuService.getMenus();
+        List<MenuResponse> responses = menuService.getUserMenus();
 
         if(!responses.isEmpty()){
 

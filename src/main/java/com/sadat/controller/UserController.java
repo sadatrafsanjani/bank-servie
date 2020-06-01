@@ -84,7 +84,7 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/change/password/{id}")
+    @PutMapping("/change/pass/{id}")
     public ResponseEntity<?> changePassword(@PathVariable("id") long id, @Valid @RequestBody PasswordRequest request){
 
         userService.updatePassword(id, request);
@@ -140,5 +140,13 @@ public class UserController {
         }
 
         return ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("/assign/menu/{id}")
+    public ResponseEntity updateMenu(@PathVariable("id") long id, @Valid @RequestBody UserMenuRequest request){
+
+        userService.updateMenu(id, request);
+
+        return ResponseEntity.noContent().build();
     }
 }

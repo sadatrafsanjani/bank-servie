@@ -1,7 +1,6 @@
 package com.sadat.dto;
 
 import lombok.*;
-
 import java.util.Set;
 
 @AllArgsConstructor
@@ -17,4 +16,5 @@ public class UserResponse {
     private boolean status;
     private Set<Long> roles;
     private byte[] picture;
+    private Set<Long> pages;
 }

@@ -64,11 +64,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         user.setEmail(request.getEmail());
         user.setPassword(encodePassword(request.getPassword()));
 
-        Set<Menu> menus = new HashSet<>(menuRepository.findUserMenus());
+        Set<Menu> menus = new HashSet<>(menuRepository.findAll());
+        user.setMenus(menus);
+
         Set<Role> roles = new HashSet<>();
         Role role = roleService.findRole("ROLE_USER");
-        role.setMenus(menus);
         roles.add(role);
+
         user.setRoles(roles);
         user.setStatus(true);
         user.setPicture(null);
@@ -102,6 +104,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                     .refreshToken(refreshTokenService.generateRefreshToken().getToken())
                     .expiresAt(Instant.now().plusMillis(jwtService.getExpirationTime()))
                     .picture(picture != null ? Image.decompressBytes(picture) : null)
+                    .pages(getPages(user.getMenus()))
                     .build();
 
         }
@@ -129,6 +132,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .refreshToken(request.getRefreshToken())
                 .expiresAt(Instant.now().plusMillis(jwtService.getExpirationTime()))
                 .picture(picture != null ? Image.decompressBytes(picture) : null)
+                .pages(getPages(user.getMenus()))
                 .build();
     }
 
@@ -154,5 +158,16 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public boolean checkUsernameIfExists(UsernameRequest request){
 
         return userService.findByUsername(request.getUsername()) != null;
+    }
+
+    private Set<Long> getPages(Set<Menu> menus){
+
+        Set<Long> menuSet = new HashSet<>();
+
+        for(Menu menu : menus){
+            menuSet.add(menu.getId());
+        }
+
+        return menuSet;
     }
 }

@@ -22,11 +22,11 @@ public class Balance {
     @JoinColumn(name = "ACCOUNT_ID")
     private Account account;
 
-    @Column(name = "DEBIT")
-    private double debit;
-
     @Column(name = "CREDIT")
     private double credit;
+
+    @Column(name = "DEBIT")
+    private double debit;
 
     @Column(name = "BALANCE")
     private double balance;

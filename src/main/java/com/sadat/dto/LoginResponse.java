@@ -21,4 +21,5 @@ public class LoginResponse {
     private String refreshToken;
     private Instant expiresAt;
     private byte[] picture;
+    private Set<Long> pages;
 }

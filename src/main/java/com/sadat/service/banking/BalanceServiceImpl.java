@@ -37,7 +37,7 @@ public class BalanceServiceImpl implements BalanceService {
     }
 
     @Override
-    public Balance debitAccount(TransactionRequest request){
+    public Balance creditAccount(TransactionRequest request){
 
         Account account = accountRepository.findByAccountNo(request.getAccountNo());
 
@@ -50,10 +50,10 @@ public class BalanceServiceImpl implements BalanceService {
 
             Balance balance = new Balance();
             balance.setAccount(account);
-            balance.setDebit(request.getAmount());
-            balance.setCredit(0.0);
+            balance.setCredit(request.getAmount());
+            balance.setDebit(0.0);
             balance.setBalance(updatedAmount);
-            balance.setDescription("Account debited by " + request.getAmount() + " BDT");
+            balance.setDescription("Account credited by " + request.getAmount() + " BDT");
             balance.setTransactionDatetime(Instant.now());
 
             return balanceRepository.save(balance);
@@ -63,7 +63,7 @@ public class BalanceServiceImpl implements BalanceService {
     }
 
     @Override
-    public Balance creditAccount(TransactionRequest request){
+    public Balance debitAccount(TransactionRequest request){
 
         Account account = accountRepository.findByAccountNo(request.getAccountNo());
 
@@ -79,11 +79,11 @@ public class BalanceServiceImpl implements BalanceService {
 
                 Balance balance = new Balance();
                 balance.setAccount(account);
-                balance.setDebit(0.0);
-                balance.setCredit(request.getAmount());
+                balance.setCredit(0.0);
+                balance.setDebit(request.getAmount());
                 balance.setBalance(updatedBalance);
                 balance.setTransactionDatetime(Instant.now());
-                balance.setDescription("Account credited by " + request.getAmount() + " BDT");
+                balance.setDescription("Account debited by " + request.getAmount() + " BDT");
 
                 return balanceRepository.save(balance);
             }
@@ -107,8 +107,8 @@ public class BalanceServiceImpl implements BalanceService {
             return BalanceResponse.builder()
                     .accountHolder(customer.getFullName())
                     .accountNo(accountNo)
-                    .debit(lastBalance.getDebit())
                     .credit(lastBalance.getCredit())
+                    .debit(lastBalance.getDebit())
                     .balance(lastBalance.getBalance())
                     .transactionDatetime(lastBalance.getTransactionDatetime())
                     .description(lastBalance.getDescription())

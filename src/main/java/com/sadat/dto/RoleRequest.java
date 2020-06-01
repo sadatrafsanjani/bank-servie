@@ -1,7 +1,6 @@
 package com.sadat.dto;
 
 import lombok.*;
-import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -11,5 +10,4 @@ import java.util.Set;
 public class RoleRequest {
 
     private Long menuId;
-    private Set<Long> menus;
 }

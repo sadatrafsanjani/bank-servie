@@ -36,6 +36,13 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "ROLE_ID", referencedColumnName = "ID"))
     private Set<Role> roles = new HashSet<>();
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "users_menus",
+            joinColumns = @JoinColumn(name = "USER_ID", referencedColumnName = "ID"),
+            inverseJoinColumns = @JoinColumn(name = "MENU_ID", referencedColumnName = "ID"))
+    private Set<Menu> menus = new HashSet<>();
+
     @Column(name = "STATUS")
     private boolean status;
 
