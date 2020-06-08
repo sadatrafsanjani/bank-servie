@@ -1,6 +1,5 @@
 package com.sadat.repository;
 
-import com.sadat.model.Menu;
 import com.sadat.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -8,7 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
-import java.util.Set;
 
 @Repository
 @Transactional
@@ -40,8 +38,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Query("UPDATE User u SET u.picture = :picture WHERE u.id = :id")
     void updatePicture(Long id, byte[] picture);
-
-    @Modifying
-    @Query("UPDATE User u SET u.menus = :menus WHERE u.id = :id")
-    void updateMenu(long id, Set<Menu> menus);
 }

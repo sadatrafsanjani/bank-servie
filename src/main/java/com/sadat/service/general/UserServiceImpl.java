@@ -245,15 +245,31 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateMenu(long id, UserMenuRequest request) {
 
-        userRepository.updateMenu(id, getMenus(request.getMenus()));
+        User user = userRepository.findById(id).get();
+
+        Iterator<Menu> iterator = user.getMenus().iterator();
+
+        while(iterator.hasNext()){
+            iterator.next();
+            iterator.remove();
+        }
+
+        user.setMenus(getMenus(request.getMenus()));
+
+        userRepository.save(user);
     }
 
     private Set<Menu> getMenus(Set<Long> menuSet){
 
-        Set<Menu> menus = new HashSet<>();
+        TreeSet set = new TreeSet(menuSet);
+        Set<Menu> menus = new LinkedHashSet<>();
 
-        for(Long id : menuSet){
-            menus.add(menuRepository.getOne(id));
+        Iterator<Long> iterator = set.iterator();
+
+        while(iterator.hasNext()){
+
+            Menu menu = menuRepository.getOne(iterator.next());
+            menus.add(menu);
         }
 
         return menus;
@@ -261,7 +277,7 @@ public class UserServiceImpl implements UserService {
 
     private Set<Long> getPages(Set<Menu> menus){
 
-        Set<Long> menuSet = new HashSet<>();
+        Set<Long> menuSet = new LinkedHashSet<>();
 
         for(Menu menu : menus){
             menuSet.add(menu.getId());

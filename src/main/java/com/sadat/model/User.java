@@ -1,9 +1,8 @@
 package com.sadat.model;
 
 import lombok.*;
-
 import javax.persistence.*;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
@@ -12,7 +11,6 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 public class User {
 
     @Id
@@ -34,14 +32,14 @@ public class User {
             name = "users_roles",
             joinColumns = @JoinColumn(name = "USER_ID", referencedColumnName = "ID"),
             inverseJoinColumns = @JoinColumn(name = "ROLE_ID", referencedColumnName = "ID"))
-    private Set<Role> roles = new HashSet<>();
+    private Set<Role> roles = new LinkedHashSet<>();
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "users_menus",
             joinColumns = @JoinColumn(name = "USER_ID", referencedColumnName = "ID"),
             inverseJoinColumns = @JoinColumn(name = "MENU_ID", referencedColumnName = "ID"))
-    private Set<Menu> menus = new HashSet<>();
+    private Set<Menu> menus = new LinkedHashSet<>();
 
     @Column(name = "STATUS")
     private boolean status;

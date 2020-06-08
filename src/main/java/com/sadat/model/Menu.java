@@ -3,6 +3,7 @@ package com.sadat.model;
 import lombok.*;
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
@@ -22,5 +23,5 @@ public class Menu {
     private String userInterface;
 
     @ManyToMany(mappedBy = "menus")
-    private Set<User> users = new HashSet<>();
+    private Set<User> users = new LinkedHashSet<>();
 }

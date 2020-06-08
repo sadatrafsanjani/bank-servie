@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Service
@@ -59,21 +60,19 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public User register(RegisterRequest request) {
 
-        User user = new User();
-        user.setUsername(request.getUsername());
-        user.setEmail(request.getEmail());
-        user.setPassword(encodePassword(request.getPassword()));
-
-        Set<Menu> menus = new HashSet<>(menuRepository.findAll());
-        user.setMenus(menus);
-
-        Set<Role> roles = new HashSet<>();
+        Set<Menu> menus = new LinkedHashSet<>(menuRepository.findAll());
+        Set<Role> roles = new LinkedHashSet<>();
         Role role = roleService.findRole("ROLE_USER");
         roles.add(role);
 
+        User user = new User();
+        user.setUsername(request.getUsername().trim());
+        user.setEmail(request.getEmail().trim());
+        user.setPassword(encodePassword(request.getPassword().trim()));
         user.setRoles(roles);
-        user.setStatus(true);
+        user.setMenus(menus);
         user.setPicture(null);
+        user.setStatus(true);
 
         //emailService.sendPassword(request.getEmail(), request.getUsername(), request.getPassword());
 
