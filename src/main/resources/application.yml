@@ -15,15 +15,14 @@ spring:
     password: 123456
     driverClassName: org.postgresql.Driver
   mail:
-    default-encoding: UTF-8
-    host: smtp.gmail.com
+    host: smtp.mailtrap.io
     port: 587
-    username:
-    password:
+    username: 0fef9003c9fde2
+    password: ca86576b238fe5
     properties:
       mail:
         smtp:
-          auth: true
+          auth: PLAIN
           starttls:
             enable: true
     protocol: smtp

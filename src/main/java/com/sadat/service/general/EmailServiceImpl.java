@@ -22,7 +22,7 @@ public class EmailServiceImpl implements EmailService {
 
         SimpleMailMessage mail = new SimpleMailMessage();
         mail.setTo(to);
-        mail.setFrom("xerodispatch@gmail.com");
+        mail.setFrom("MailTrap.io");
         mail.setSubject("Login Credentials");
         mail.setText("Username: " + username + "\n "
                 + "Password: " + password);
@@ -38,7 +38,7 @@ public class EmailServiceImpl implements EmailService {
 
         SimpleMailMessage mail = new SimpleMailMessage();
         mail.setTo(to);
-        mail.setFrom("xerodispatch@gmail.com");
+        mail.setFrom("MailTrap.io");
         mail.setSubject("Login Credentials");
         mail.setText(body);
 

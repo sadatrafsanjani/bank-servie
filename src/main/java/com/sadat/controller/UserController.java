@@ -100,20 +100,24 @@ public class UserController {
         return ResponseEntity.ok("User removed!");
     }
 
-    @GetMapping("/activate/{id}")
+    @PutMapping("/activate/{id}")
     public ResponseEntity<?> activateUser(@PathVariable("id") long id){
 
-        if(userService.activateUser(id)){
+        if(userService.getUserById(id) != null){
+
+            userService.activateUser(id);
             return ResponseEntity.noContent().build();
         }
 
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping("/deactivate/{id}")
+    @PutMapping("/deactivate/{id}")
     public ResponseEntity<?> deactivateUser(@PathVariable("id") long id){
 
-        if(userService.deactivateUser(id)){
+        if(userService.getUserById(id) != null){
+
+            userService.deactivateUser(id);
             return ResponseEntity.noContent().build();
         }
 

@@ -2,6 +2,8 @@ package com.sadat.config;
 
 import com.sadat.filter.JwtAuthenticationFilter;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -21,16 +23,18 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
+
     private static final String[] AUTH_WHITELIST = {
 
             "/api/authentication/**",
-            "/api/yes",
             "/v2/api-docs",
             "/configuration/ui",
             "/swagger-resources/**",
             "/configuration/security",
             "/swagger-ui.html",
-            "/webjars/**"
+            "/webjars/**",
+            "/actuator/**"
     };
 
     private static final String[] AUTH_WHITELIST_POST = {
@@ -49,9 +53,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean(BeanIds.AUTHENTICATION_MANAGER)
     @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
+    public AuthenticationManager authenticationManagerBean() {
 
-        return super.authenticationManagerBean();
+        AuthenticationManager manager = null;
+
+        try{
+            manager = super.authenticationManagerBean();
+        }
+        catch(Exception e){
+            logger.error(e.getMessage());
+        }
+
+        return manager;
     }
 
     @Bean
@@ -66,24 +79,34 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder builder){
 
-        auth.userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder());
+        try{
+            builder.userDetailsService(userDetailsService)
+                    .passwordEncoder(passwordEncoder());
+        }
+        catch (Exception e){
+            logger.error(e.getMessage());
+        }
     }
 
     @Override
-    public void configure(HttpSecurity httpSecurity) throws Exception {
+    public void configure(HttpSecurity httpSecurity) {
 
-        httpSecurity
-                .csrf().disable()
-                .authorizeRequests()
-                .antMatchers(AUTH_WHITELIST).permitAll()
-                .antMatchers(HttpMethod.POST, AUTH_WHITELIST_POST).permitAll()
-                .anyRequest().authenticated();
+        try{
+            httpSecurity
+                    .csrf().disable()
+                    .authorizeRequests()
+                    .antMatchers(AUTH_WHITELIST).permitAll()
+                    .antMatchers(HttpMethod.POST, AUTH_WHITELIST_POST).permitAll()
+                    .anyRequest().authenticated();
 
-        httpSecurity
-                .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+            httpSecurity
+                    .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+        }
+        catch(Exception e){
+            logger.error(e.getMessage());
+        }
     }
 
     @Override

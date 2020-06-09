@@ -174,31 +174,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean activateUser(long id){
+    public void activateUser(long id){
 
-        Optional<User> userOptional = userRepository.findById(id);
-
-        if(userOptional.isPresent()){
-            userRepository.activateUser(id);
-        }
-
-        User user = userRepository.getOne(id);
-
-        return user.isStatus();
+        userRepository.activateUser(id);
     }
 
     @Override
-    public boolean deactivateUser(long id){
+    public void deactivateUser(long id){
 
-        Optional<User> userOptional = userRepository.findById(id);
-
-        if(userOptional.isPresent()){
-            userRepository.deactivateUser(id);
-        }
-
-        User user = userRepository.getOne(id);
-
-        return !user.isStatus();
+        userRepository.deactivateUser(id);
     }
 
     @Override

@@ -19,8 +19,8 @@ public interface UserService extends UserDetailsService {
     User findByEmail(String email);
     Set<Long> getRoles(User user);
     UserResponse getUserById(long id);
-    boolean activateUser(long id);
-    boolean deactivateUser(long id);
+    void activateUser(long id);
+    void deactivateUser(long id);
     void updatePicture(long id, PictureRequest request);
     PictureResponse getProfilePicture(long id);
     void updateMenu(long id, UserMenuRequest request);
