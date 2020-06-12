@@ -1,4 +1,4 @@
-package com.sadat.dto;
+package com.sadat.dto.general;
 
 import lombok.*;
 
@@ -7,7 +7,8 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class PictureRequest {
+public class UploadRequest {
 
+    private byte[] nid;
     private byte[] picture;
 }

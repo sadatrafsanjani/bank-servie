@@ -1,7 +1,7 @@
 package com.sadat.service.banking;
 
-import com.sadat.dto.BalanceResponse;
-import com.sadat.dto.TransactionRequest;
+import com.sadat.dto.banking.BalanceResponse;
+import com.sadat.dto.banking.TransactionRequest;
 import com.sadat.model.Balance;
 import java.util.List;
 

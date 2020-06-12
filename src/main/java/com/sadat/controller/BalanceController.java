@@ -1,7 +1,7 @@
 package com.sadat.controller;
 
-import com.sadat.dto.BalanceResponse;
-import com.sadat.dto.TransactionRequest;
+import com.sadat.dto.banking.BalanceResponse;
+import com.sadat.dto.banking.TransactionRequest;
 import com.sadat.service.banking.BalanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

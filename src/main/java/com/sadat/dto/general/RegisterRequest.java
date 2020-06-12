@@ -1,4 +1,4 @@
-package com.sadat.dto;
+package com.sadat.dto.general;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class AccountRequest {
+public class RegisterRequest {
 
-    private String accountNo;
+    private String username;
+    private String password;
+    private String email;
 }

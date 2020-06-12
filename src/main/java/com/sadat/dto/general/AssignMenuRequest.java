@@ -1,15 +1,17 @@
-package com.sadat.dto;
+package com.sadat.dto.general;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Set;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class EmailRequest {
+public class AssignMenuRequest {
 
-    private String email;
+    private Set<Long> menus;
 }

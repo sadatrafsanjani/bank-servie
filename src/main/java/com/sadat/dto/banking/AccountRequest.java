@@ -1,4 +1,4 @@
-package com.sadat.dto;
+package com.sadat.dto.banking;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class MenuRequest {
+public class AccountRequest {
 
-    private String userInterface;
+    private String accountNo;
 }

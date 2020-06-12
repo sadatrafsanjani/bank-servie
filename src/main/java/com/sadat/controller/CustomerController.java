@@ -1,6 +1,8 @@
 package com.sadat.controller;
 
-import com.sadat.dto.*;
+import com.sadat.dto.banking.AccountRequest;
+import com.sadat.dto.banking.CustomerRequest;
+import com.sadat.dto.banking.CustomerResponse;
 import com.sadat.service.banking.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

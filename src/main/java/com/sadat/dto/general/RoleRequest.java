@@ -1,4 +1,4 @@
-package com.sadat.dto;
+package com.sadat.dto.general;
 
 import lombok.*;
 
@@ -7,7 +7,7 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class PictureResponse {
+public class RoleRequest {
 
-    private byte[] picture;
+    private Long menuId;
 }

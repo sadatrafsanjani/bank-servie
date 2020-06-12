@@ -1,6 +1,6 @@
 package com.sadat.controller;
 
-import com.sadat.dto.*;
+import com.sadat.dto.general.*;
 import com.sadat.service.general.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;

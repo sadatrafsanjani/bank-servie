@@ -1,6 +1,6 @@
 package com.sadat.service.general;
 
-import com.sadat.dto.*;
+import com.sadat.dto.general.*;
 import com.sadat.model.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import java.util.List;

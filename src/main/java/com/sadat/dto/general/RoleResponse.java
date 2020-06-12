@@ -1,4 +1,4 @@
-package com.sadat.dto;
+package com.sadat.dto.general;
 
 import lombok.*;
 import java.util.Set;

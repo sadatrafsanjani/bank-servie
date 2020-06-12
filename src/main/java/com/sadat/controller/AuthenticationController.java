@@ -1,7 +1,6 @@
 package com.sadat.controller;
 
-import com.sadat.dto.*;
-import com.sadat.model.Customer;
+import com.sadat.dto.general.*;
 import com.sadat.service.general.AuthenticationService;
 import com.sadat.service.general.RefreshTokenService;
 import org.springframework.beans.factory.annotation.Autowired;

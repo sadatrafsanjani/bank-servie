@@ -1,8 +1,8 @@
 package com.sadat.service.banking;
 
-import com.sadat.dto.AccountRequest;
-import com.sadat.dto.CustomerRequest;
-import com.sadat.dto.CustomerResponse;
+import com.sadat.dto.banking.AccountRequest;
+import com.sadat.dto.banking.CustomerRequest;
+import com.sadat.dto.banking.CustomerResponse;
 import com.sadat.model.Account;
 import com.sadat.model.Balance;
 import com.sadat.model.Customer;

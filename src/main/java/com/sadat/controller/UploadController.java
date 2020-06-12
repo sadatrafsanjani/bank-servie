@@ -1,7 +1,7 @@
 package com.sadat.controller;
 
-import com.sadat.dto.UploadRequest;
-import com.sadat.dto.UploadResponse;
+import com.sadat.dto.general.UploadRequest;
+import com.sadat.dto.general.UploadResponse;
 import com.sadat.service.banking.UploadService;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;

@@ -1,6 +1,6 @@
 package com.sadat.service.banking;
 
-import com.sadat.dto.ProductResponse;
+import com.sadat.dto.banking.ProductResponse;
 import com.sadat.model.Product;
 import com.sadat.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
 package com.sadat.service.general;
 
-import com.sadat.dto.*;
+import com.sadat.dto.general.*;
 import com.sadat.model.Menu;
 import com.sadat.model.Role;
 import com.sadat.model.User;

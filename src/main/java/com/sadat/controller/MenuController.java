@@ -1,7 +1,7 @@
 package com.sadat.controller;
 
-import com.sadat.dto.MenuRequest;
-import com.sadat.dto.MenuResponse;
+import com.sadat.dto.general.MenuRequest;
+import com.sadat.dto.general.MenuResponse;
 import com.sadat.service.general.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

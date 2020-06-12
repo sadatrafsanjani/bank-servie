@@ -1,6 +1,6 @@
 package com.sadat.service.general;
 
-import com.sadat.dto.*;
+import com.sadat.dto.general.*;
 import com.sadat.model.*;
 import com.sadat.repository.MenuRepository;
 import com.sadat.utility.Image;
@@ -74,7 +74,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         user.setPicture(null);
         user.setStatus(true);
 
-        //emailService.sendPassword(request.getEmail(), request.getUsername(), request.getPassword());
+        emailService.sendPassword(request.getEmail(), request.getUsername(), request.getPassword());
 
         return userService.saveUser(user);
     }

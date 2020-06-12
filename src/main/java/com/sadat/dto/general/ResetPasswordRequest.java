@@ -1,17 +1,16 @@
-package com.sadat.dto;
+package com.sadat.dto.general;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Set;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class AssignMenuRequest {
+public class ResetPasswordRequest {
 
-    private Set<Long> menus;
+    private String email;
+    private String password;
 }

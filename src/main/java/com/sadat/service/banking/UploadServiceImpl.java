@@ -1,7 +1,7 @@
 package com.sadat.service.banking;
 
-import com.sadat.dto.UploadRequest;
-import com.sadat.dto.UploadResponse;
+import com.sadat.dto.general.UploadRequest;
+import com.sadat.dto.general.UploadResponse;
 import com.sadat.model.Upload;
 import com.sadat.repository.UploadRepository;
 import com.sadat.utility.Image;
